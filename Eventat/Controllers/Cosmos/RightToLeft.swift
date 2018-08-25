@@ -1,9 +1,18 @@
-//
-//  RightToLeft.swift
-//  Eventat
-//
-//  Created by SourceCode on 8/1/18.
-//  Copyright © 2018 SourceCode. All rights reserved.
-//
+import UIKit
 
-import Foundation
+/**
+ 
+ Helper functions for dealing with right-to-left languages.
+ 
+ */
+struct RightToLeft {
+    static func isRightToLeft(_ view: UIView) -> Bool {
+        if #available(iOS 9.0, *) {
+            return UIView.userInterfaceLayoutDirection(
+                for: view.semanticContentAttribute) == .rightToLeft
+        } else {
+            return false
+        }
+    }
+}
+

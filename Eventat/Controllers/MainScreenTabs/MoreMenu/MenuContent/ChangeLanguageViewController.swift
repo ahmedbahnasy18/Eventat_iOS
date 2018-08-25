@@ -15,6 +15,7 @@ class ChangeLanguageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+          self.navigationController?.navigationBar.isTranslucent = false
         self.changeBtnOutlet.setTitle(NSLocalizedString("changeBtn" , comment: ""), for: .normal)
         if ChangeLanguageViewController.currentAppleLanguage() == "en" {
             self.curentLangLabel.text = NSLocalizedString("changeTo" , comment: "") + "العربية"
@@ -56,7 +57,7 @@ class ChangeLanguageViewController: UIViewController {
             UIView.appearance().semanticContentAttribute = .forceLeftToRight
         }
         let rootviewcontroller: UIWindow = ((UIApplication.shared.delegate?.window)!)!
-        rootviewcontroller.rootViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainScreensViewController")
+        rootviewcontroller.rootViewController = self.storyboard?.instantiateViewController(withIdentifier: "Main")
         let mainwindow = (UIApplication.shared.delegate?.window!)!
         mainwindow.backgroundColor = UIColor(hue: 0.6477, saturation: 0.6314, brightness: 0.6077, alpha: 0.8)
         UIView.transition(with: mainwindow, duration: 0.55001, options: transition, animations: { () -> Void in

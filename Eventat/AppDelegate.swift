@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var navController: UINavigationController?
+    var tabController: MainScreensViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+    IQKeyboardManager.shared.enable = true
+        L102Localizer.DoTheMagic()
+      //  checkLogin()
+         setUpNavigationController()
         return true
     }
 
@@ -40,7 +46,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    func checkLogin(){
+        if let favorites = UserDefaults.standard.data(forKey: "logResp") {
+            if favorites.count == 0 {
+              
+                
+            } else {
+                print("you're logged in")
+                let myStoryboard = UIStoryboard(name: "MainScreens", bundle: nil) as UIStoryboard
+                self.tabController = myStoryboard.instantiateViewController(withIdentifier: "MainScreensViewController") as? MainScreensViewController
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.window?.rootViewController = self.tabController
+                appDelegate.window?.makeKeyAndVisible()
+            }
+        } 
+        
+    }
+    //MARK:- Callback Funcs
+    func setUpNavigationController(){  //self.navigationController?.navigationBar.isTranslucent = false
+        UINavigationBar.appearance().barTintColor = UIColor.appOrange
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) ]
+        //UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.font: UIFont(name: "System", size: 13)!]
+        
+    }
 }
 

@@ -14,6 +14,7 @@ class ParentCategoryViewController: UIViewController,UICollectionViewDelegate,UI
     var categoryResp : [CategoriesResp]?
     var flag : Int?
     let itemsPerRow : CGFloat = 2
+    var productId : Int?
     let sectionInsets = UIEdgeInsets(top: 20.0, left: 20.0, bottom: 20.0, right: 20.0)
     
     override func viewDidLoad() {
@@ -39,10 +40,20 @@ class ParentCategoryViewController: UIViewController,UICollectionViewDelegate,UI
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = catCollectionView.dequeueReusableCell(withReuseIdentifier: "parentSubCat", for: indexPath) as! ParentSubCollectionViewCell
-//     let urlImg = ConstantStrings.WebServices.baseUrlImg + (self.categoryResp?[indexPath.item].imageName)!
-//        print(urlImg)
-//       let finalUrl = URL(string: urlImg)
-//        cell.categoryImgs.kf.setImage(with: finalUrl)
+        
+        if(self.categoryResp?[indexPath.item].imageName == ""){
+            cell.categoryImgs.image = #imageLiteral(resourceName: "LoginEVENT-31")
+        }else{
+            let urlImg = ConstantStrings.WebServices.baseUrlImg + (self.categoryResp?[indexPath.item].imageName)!
+            print(urlImg)
+            let finalUrl = URL(string: urlImg)
+           cell.categoryImgs.kf.setImage(with: finalUrl, placeholder:#imageLiteral(resourceName: "LoginEVENT-31") , options: nil, progressBlock: nil, completionHandler: nil)
+            if ChangeLanguageViewController.currentAppleLanguage() == "ar" {
+                cell.categoryName_lbl.text = self.categoryResp?[indexPath.item].name_ar
+            } else {
+                cell.categoryName_lbl.text = self.categoryResp?[indexPath.item].name
+            }
+        }
         return cell
     }
     //1
@@ -73,6 +84,16 @@ class ParentCategoryViewController: UIViewController,UICollectionViewDelegate,UI
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
+        self.productId = self.categoryResp?[indexPath.item].catId
+        performSegue(withIdentifier: "goSubFromParent", sender: self)
 }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "goSubFromParent"){
+            
+            let des = segue.destination as! SubFromParentViewController
+            des.id = self.productId
+             des.title = self.title
+        }
+    }
 
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OpeningTimeTableViewController:      UITableViewCell {
+class OpeningTimeTableViewCell:      UITableViewCell {
 @IBOutlet weak var date: UILabel!
 @IBOutlet weak var from: UILabel!
     @IBOutlet weak var to: UILabel!

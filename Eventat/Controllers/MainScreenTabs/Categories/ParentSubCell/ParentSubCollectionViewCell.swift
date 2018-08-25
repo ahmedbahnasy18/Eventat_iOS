@@ -9,5 +9,7 @@
 import UIKit
 
 class ParentSubCollectionViewCell: UICollectionViewCell {
+    @IBOutlet weak var categoryImgs: UIImageView!
+    @IBOutlet weak var categoryName_lbl: UILabel!
     
 }

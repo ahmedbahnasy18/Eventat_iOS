@@ -17,6 +17,11 @@ class LoginApi: NSObject{ //http://event.alexwestschools.com/api/Users1/login?Em
                         Mapper<LoginResponse>().map(JSON:responseObject as![String : Any]) //Swift 3
                     if(loginResponse?.message == "ok"){
                         completionHandler(loginResponse!,"")
+                        let id = loginResponse?.code
+                        let userDefaults = UserDefaults.standard
+                        userDefaults.setValue(id, forKey: "userId")
+                        userDefaults.synchronize() // don't forget this!!!!
+                        
                     }else{
                         completionHandler(loginResponse!,"The user name or password is incorrect")
                     }

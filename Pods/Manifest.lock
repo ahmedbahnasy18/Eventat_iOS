@@ -1,0 +1,36 @@
+PODS:
+  - Alamofire (4.7.1)
+  - CarbonKit (2.2.2)
+  - IQKeyboardManagerSwift (6.0.0)
+  - JGProgressHUD (2.0.2)
+  - Kingfisher (4.7.0)
+  - ObjectMapper (3.1.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - CarbonKit
+  - IQKeyboardManagerSwift
+  - JGProgressHUD
+  - Kingfisher
+  - ObjectMapper
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - CarbonKit
+    - IQKeyboardManagerSwift
+    - JGProgressHUD
+    - Kingfisher
+    - ObjectMapper
+
+SPEC CHECKSUMS:
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  CarbonKit: 0dec4738fa489b4c043a5f850c27fd0dbefb57cc
+  IQKeyboardManagerSwift: 624f128983eec795deacd50c1cd2f72664d13f08
+  JGProgressHUD: bf75da151936cfd3c9b674afb17e8a5df2e14a7d
+  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
+  ObjectMapper: 20505058f54e5c3ca69e1d6de9897d152a5369a6
+
+PODFILE CHECKSUM: d29f5ba83f4c48db8ebee414800a25a8b0f653f7
+
+COCOAPODS: 1.5.0

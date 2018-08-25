@@ -18,7 +18,35 @@ class RegisterAPi: NSObject{
         
         let url = ConstantStrings.WebServices.baseUrl + "api/Users1/Registration"
 
-        NetWorkConnection.fetchDataDic(url: url, httpmethod: .post, parameters: parameters, completionHandler: {responseObject, error in
+        NetWorkConnection.postData(url: url, httpmethod: .post, parameters: parameters, completionHandler: {responseObject, error in
+            
+            if(error==nil)
+            {
+                let loginResponse =
+                    Mapper<SuccessResp>().map(JSON:responseObject as![String : Any]) //Swift 3
+                if(loginResponse?.message == "ok"){
+                    completionHandler(loginResponse!,"")
+                }else{
+                    completionHandler(loginResponse!,"The user name or password is incorrect")
+                }
+            }
+            else
+            {
+                completionHandler(Mapper<SuccessResp>().map(JSON:[:])!,"no_internet");
+            }
+        });
+    }
+    
+    
+    
+    
+    class func UpdateData(ContactName: String,ContactEmail :String,Password :String, ContactPhone  : String, IP_Address: String,userID : Int, completionHandler:@escaping(SuccessResp?,String)->()){
+        let parameters = ["ContactName":ContactName, "ContactEmail" : ContactEmail,  "Password" : Password, "ContactPhone" : ContactPhone, "Address" : IP_Address , "code" : userID ] as [String : Any] as NSDictionary
+        
+        
+        let url = ConstantStrings.WebServices.baseUrl + "api/Users1/UpdateUsers"
+        
+        NetWorkConnection.postData(url: url, httpmethod: .post, parameters: parameters, completionHandler: {responseObject, error in
             
             if(error==nil)
             {

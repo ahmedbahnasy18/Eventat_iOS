@@ -10,6 +10,11 @@ import UIKit
 
 class LastOrderTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var orderID: UILabel!
+    @IBOutlet weak var totalPrice: UILabel!
+    @IBOutlet weak var deliveryDate: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

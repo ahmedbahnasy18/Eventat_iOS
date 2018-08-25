@@ -33,10 +33,13 @@ class PurchaseViewController: UIViewController {
      let userDefaults = UserDefaults.standard
     var productCost : Float!
     var finalProductCoast : Float!
+    var userId : Int?
+    var contantId : Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
          setUpViews()
+        print(contantId!)
         self.confirmPurchase.setTitle(NSLocalizedString("confirmPurchase", comment: ""), for: .normal)
         self.stepperOutlet.minimumValue = 1.0
       self.quantityNum.text = "\(self.stepperOutlet.minimumValue)"
@@ -60,6 +63,8 @@ class PurchaseViewController: UIViewController {
                 let decoded  = userDefaults.object(forKey: "logResp") as! Data
                 let decodedUser = NSKeyedUnarchiver.unarchiveObject(with: decoded) as! LoginResponse
                 self.addressFromLogin = decodedUser.iPAddress as? String
+                let decodedUserId  = userDefaults.string(forKey: "userId")
+                self.userId = Int(decodedUserId!)
             }
         } else {
             
@@ -114,11 +119,32 @@ class PurchaseViewController: UIViewController {
           
             self.sameAddressString = self.addressBill.text
         }
-        print(sameAddressString!)
+        print(finalProductCoast)
            
-            ConstantStrings.mainCollectionConstants.cart.append(["productName": self.productName, "quantity" : self.quantityNum.text!, "deliverTime" : deliverTime.text!, "deliverDate" : date.text!, "address" : address.text!, "chargeAddress" : sameAddressString!, "comment" : comment.text!, "totalCost" : finalProductCoast ])
+            
+//        {
+//
+//
+//
+//
+//            "ContantId": 1
+//            }
+            
+            ConstantStrings.mainCollectionConstants.cart.append(["Descrption": self.productName, "Qty" : self.quantityNum.text!, "Timedelivery" : deliverTime.text!, "Datedelivery" : date.text!, "ShippingAddress" : address.text!,  "Commnt" : comment.text!, "Price" : finalProductCoast,"UserID" :  self.userId! , "ContantId" : self.contantId!])
+            self.performSegue(withIdentifier: "goToConfirmPurchase", sender: self)
 
     }}
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(segue.identifier == "goToConfirmPurchase"){
+            
+            let des = segue.destination as! ConfirmPurchaseViewController
+            des.productName =  self.productName
+        }
+    }
+    
     func createAlert(title : String, message : String ){
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         

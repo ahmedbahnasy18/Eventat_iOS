@@ -1,35 +1,34 @@
 //
-//  SubmitRateViewController.swift
+//  ForgetPassword.swift
 //  Eventat
 //
-//  Created by SourceCode on 8/2/18.
+//  Created by SourceCode on 7/29/18.
 //  Copyright © 2018 SourceCode. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import ObjectMapper
 
-class SubmitRateViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+class SubmitRateApi: NSObject{ //http://event.alexwestschools.com/Rate?userid=1&rate=1&contatId=1
+    class func SubmitRateApi(userId: Int, rate : Float, contantId : Int, completionHandler:@escaping(SuccessResp?,String)->()){
+        let url = ConstantStrings.WebServices.baseUrl + "Rate?userid=\(userId)&rate=\(rate)&contatId=\(contantId)"
+        
+        NetWorkConnection.fetchDataDic(url: url, httpmethod: .get, parameters: [:], completionHandler: {responseObject, error in
+            
+            if(error==nil)
+            {
+                let loginResponse =
+                    Mapper<SuccessResp>().map(JSON:responseObject as![String : Any]) //Swift 3
+                if(loginResponse?.message == "ok"){
+                    completionHandler(loginResponse!,"")
+                }else{
+                    completionHandler(loginResponse!,"The user name or password is incorrect")
+                }
+            }
+            else
+            {
+                completionHandler(Mapper<SuccessResp>().map(JSON:[:])!,"no_internet");
+            }
+        });
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
